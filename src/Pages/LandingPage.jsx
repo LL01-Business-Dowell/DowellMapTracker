@@ -1,27 +1,45 @@
 import { useState } from "react";
 import Layout from "../Layout/Layout";
-import MySurveys from "./MySurveys";
 import MainMap from "../components/Map";
 import { useGlobalContext } from "../Context/PreviewContext";
-import FetchNearby from "../data/fetchNearby";
-import FetchPlaceDetail from "../data/fetchPlaceDetail";
 
 const LandingPage = () => {
   const context = useGlobalContext();
   console.log("context Value: ",context)
-  const { inputData, setInputData, setAPIKey, api_key, setCenterCoords, centerCoords, placeAPIKey } = context;
-  const [loading, setLoading] = useState(false);
-  const [receivedKey, setRecievedKey] = useState("EhdQUTM2K0hNLCBOYWlyb2JpLCBLZW55YSImOiQKCg2PPDr");
-  const [placeDetails, setPlaceDetails] = useState([]);
-  const [nearbyResults, setNearbyResults] = useState([]);
+  const { centerCoords } = context;
+  const [dataFromServer, setDataFromServer] = useState(null);
   
 
-  const centerParams = {
-    center_lat: centerCoords.lat,
-    center_lon: centerCoords.lon,
+  // const centerParams = {
+  //   center_lat: centerCoords.lat,
+  //   center_lon: centerCoords.lon,
+  // };
+
+
+  // instance of websocket connection as a state
+  const [ws, setWs] = useState(new WebSocket('ws://localhost:3000/ws'));
+
+  const updateLocation =(event)=>{
+    setDataFromServer(event)
+  }
+  ws.addEventListener("open", (event) => {
+    socket.send("Hello Server!");
+  })
+  ws.addEventListener("message", (event) => {
+    updateLocation(event)
+    
+  })
+
+  // Error handling
+  ws.addEventListener('error', (error) => {
+    console.error('WebSocket error:', error);
+    // Handle error state or reconnect logic here
+  });
+
+  // Close WebSocket connection on component unmount
+  ws.onclose = () => {
+    console.log('WebSocket connection closed');
   };
-
-
 
 
   return (
