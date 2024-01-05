@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/LL01-Business-Dowell/DowellMapTracker/issues"
   },
-  "homepage": "https://github.com/LL01-Business-Dowell/DowellMapTracker#readme"
+  "homepage": "https://github.com/LL01-Business-Dowell/DowellMapTracker#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2",
+    "socket.io": "^4.7.3"
+  }
 }
