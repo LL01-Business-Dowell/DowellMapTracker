@@ -34,35 +34,6 @@ const io = socketIO(server, {
 io.on('connection', (socket) => {
     console.log('Client connected');
 
-    // Rest of your Socket.IO code...
-
-    socket.on('disconnect', () => {
-        console.log('Client disconnected');
-    });
-});
-
-
-
-app.use((req, res, next) => {
-    ioCors(req, res, (err) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error handling CORS' });
-        }
-        next();
-    });
-});
-const corsOptions = {
-    origin: ['http://localhost:5173'], // Adjust the port and domain of your React app
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    transports: ['polling'],
-};
-
-
-
-io.on('connection', (socket) => {
-    console.log(`Client connected: ${socket.id}`);
-
     // Handle messages from FlutterFlow app
     socket.on('flutterflowMessage', (message) => {
         console.log('Message from FlutterFlow:', message);
@@ -81,6 +52,9 @@ io.on('connection', (socket) => {
         console.log('Client disconnected');
     });
 });
+
+
+
 
 const PORT = 3001;
 server.listen(PORT, () => {
