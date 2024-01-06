@@ -31,8 +31,10 @@ const io = socketIO(server, {
     },
 });
 
-io.on('connection', (socket) => {
+io.of("/socket").on('connection', (socket) => {
     console.log('Client connected');
+    console.log(`Client connected to path: ${socket.nsp.name}`)
+
 
     // Handle messages from FlutterFlow app
     socket.on('flutterflowMessage', (message) => {
