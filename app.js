@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 // Create a separate cors instance for Socket.IO
 const ioCors = cors({
-    origin: 'http://localhost:5173',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 });
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 const io = socketIO(server, {
     cors: {
-        origin: 'http://localhost:5173', // Adjust the port and domain of your client app
+        origin: '*', // Adjust the port and domain of your client app
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
     },
