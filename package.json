@@ -27,13 +27,16 @@
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-addons": "^0.9.1-deprecated",
+    "react-bootstrap": "^2.10.0",
+    "react-bootstrap-modal": "^4.2.0",
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
     "react-icons": "^4.11.0",
     "react-pure-render": "^1.0.2",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.16.0",
-    "require": "^2.4.20"
+    "require": "^2.4.20",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
