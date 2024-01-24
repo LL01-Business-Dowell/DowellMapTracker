@@ -1,10 +1,20 @@
 import Canvas from "./Canvas";
-import { useEffect } from "react";
+import { FiMenu } from "react-icons/fi";
+import React, { useEffect } from "react";
 import { io } from 'socket.io-client';
 import SideBar from "./SideBar";
+import Header from "./Pages/Header";
+import { UseStateContext } from "./Context/Context.jsx";
+import DeviceSpace from "./Pages/DeviceSpace.jsx";
 
 
 const App = () => {
+
+  const { 
+    showWorkSpace, 
+    setShowWorkSpace, 
+    deviceSpace,
+    setDeviceSpace } = UseStateContext()
   useEffect(() => {
     // Connect to the Socket.IO server
     const socket = io('http://216.219.86.171:3001/socket'); // Use 'http://' or 'https://' depending on your server configuration
@@ -40,11 +50,15 @@ const App = () => {
 
 
   return (
-    < div style={{ display: "flex" }} >
-      <div className="Sidebar" style={{ width: "200px" }}>
+    < div >
+    <Header />
+      {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
         <SideBar />
-      </div>
-      <div className="canvas" style={{ marginLeft: "200px" }}>
+      </div>}
+      {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
+        <DeviceSpace />
+      </div>}
+      <div className="canvas">
         <Canvas />
       </div>
     </div>

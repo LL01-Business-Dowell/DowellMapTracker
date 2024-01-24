@@ -127,7 +127,7 @@ const sleep = ms =>
   new Promise(resolve => setTimeout(resolve, ms));
 const Canvas = () => {
   const canvasSize = 52; // in centimeters
-  const boxSize = 0.1; // in centimeters
+  const boxSize = 1; // in centimeters
   const numBoxes = canvasSize / boxSize; // Number of boxes per side
   const [selectedRowColumn, setSelectedRowColumn] = useState(["row_45col_13"]);
   // const [cellsSelected, setSelectedCells] = useState([]);
@@ -141,53 +141,53 @@ const Canvas = () => {
   const [showModal, setShowModal] = useState(false);
   const [coordinates, setCoordinates] = useState([]);
   const [selectionColors, setSelectionColors] = useState([]);
-  const triggerColor = () => {
-    if (selectedRowColumn.length < 8) {
-      superDummmyCoords.forEach((item) => {
-        // let data = getCellCoordinates(item.lat, item.lng)
-        // sleep(10000).then(() => {
-
-        console.log('this ran after 1 second');
-        const row = item.lat
-        const col = item.lng
-        const coords = `row_${row}col_${col}`
-        const updatedArray = AppendItems(selectedRowColumn, coords)
-        // document.querySelector('#' + coords).style.background = 'green';
-
-
-
-        console.log("coords", coords)
-
-        setSelectedRowColumn([...selectedRowColumn, coords]);
-        // setSelectedRowColumn({...getCellCoordinates(item.lat, item.lng)})
-        console.log(selectedRowColumn)
-        console.log('bobbyhadz.com');
-        // });
-
-      })
-    }
-
-  }
-  //  const triggerColor = async () => {
+  // const triggerColor = () => {
   //   if (selectedRowColumn.length < 8) {
-  //     for (let i = 1; i < superDummmyCoords.length; i++) {
-  //       await sleep(10000)
-  //       const item = superDummmyCoords[i]
+  //     superDummmyCoords.forEach((item) => {
+  //       // let data = getCellCoordinates(item.lat, item.lng)
+  //       // sleep(10000).then(() => {
+
+  //       console.log('this ran after 1 second');
   //       const row = item.lat
   //       const col = item.lng
   //       const coords = `row_${row}col_${col}`
+  //       const updatedArray = AppendItems(selectedRowColumn, coords)
+  //       // document.querySelector('#' + coords).style.background = 'green';
+
+
+
+  //       console.log("coords", coords)
+
   //       setSelectedRowColumn([...selectedRowColumn, coords]);
-  //       for (let i = 0; i < selectedRowColumn.length; i++) {
-  //         // console.log(array[i]);
-  //         document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
-  //       }
-
+  //       // setSelectedRowColumn({...getCellCoordinates(item.lat, item.lng)})
   //       console.log(selectedRowColumn)
-  //     }
+  //       console.log('bobbyhadz.com');
+  //       // });
 
+  //     })
   //   }
 
   // }
+   const triggerColor = async () => {
+    if (selectedRowColumn.length < 8) {
+      for (let i = 1; i < superDummmyCoords.length; i++) {
+        await sleep(10000)
+        const item = superDummmyCoords[i]
+        const row = item.lat
+        const col = item.lng
+        const coords = `row_${row}col_${col}`
+        setSelectedRowColumn([...selectedRowColumn, coords]);
+        for (let i = 0; i < selectedRowColumn.length; i++) {
+          // console.log(array[i]);
+          document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
+        }
+
+        console.log(selectedRowColumn)
+      }
+
+    }
+
+  }
   // const triggerColor = async () => {
   //   if (selectedRowColumn.length < 8) {
   //     for (let i = 1; i < dummmyCoords.length; i++) {
@@ -400,7 +400,7 @@ const Canvas = () => {
           variant='success'
           onClick={fetchSelections} // Clears all selections// Adjust the position as needed
         > */}
-        Refresh
+        {/* Refresh */}
         {/* </Button> */}
       </div>
 
