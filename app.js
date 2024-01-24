@@ -34,21 +34,27 @@ const io = socketIO(server, {
 io.of("/socket").on('connection', (socket) => {
     console.log('Client connected');
     console.log(`Client connected to path: ${socket.nsp.name}`)
+    socket.emit('hello', 'Hello from the server');
 
 
     // Handle messages from FlutterFlow app
     socket.on('flutterflowMessage', (message) => {
         console.log('Message from FlutterFlow:', message);
         // Broadcast the message to React app
-        io.emit('reactMessage', message);
+        socket.broadcast.emit('flutterflowMessage', message);
     });
 
     // Handle messages from React app
     socket.on('reactMessage', (message) => {
         console.log('Message from React:', message);
         // Broadcast the message to FlutterFlow app
-        io.emit('flutterflowMessage', message);
+        socket.broadcast.emit('reactMessage', message);
     });
+
+    socket.on("message", (message) => {
+        console.log("message received: ", message)
+        socket.broadcast.emit("message", message)
+    })
 
     socket.on('disconnect', () => {
         console.log('Client disconnected');
