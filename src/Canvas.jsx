@@ -168,7 +168,7 @@ const Canvas = () => {
   //   }
 
   // }
-   const triggerColor = async () => {
+  const triggerColor = async () => {
     if (selectedRowColumn.length < 8) {
       for (let i = 1; i < superDummmyCoords.length; i++) {
         await sleep(10000)
@@ -450,7 +450,7 @@ const Canvas = () => {
                 id={`row_${y}col_${x}`}
                 className={`box ${isSelected ? 'selected' : ''}`}
                 style={{
-                  border: '0.1px solid #ffff',
+                  // border: '0.1px solid #ffff',
                   boxSizing: 'border-box',
                   cursor: 'pointer',
                   backgroundColor: Array.from(selectedRowColumn).includes(`row_${y}col_${x}`) ? "green" : 'transparent'
