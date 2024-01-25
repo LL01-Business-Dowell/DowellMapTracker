@@ -14,10 +14,12 @@ const App = () => {
     showWorkSpace, 
     setShowWorkSpace, 
     deviceSpace,
-    setDeviceSpace } = UseStateContext()
+    setDeviceSpace,
+    workspaceData, 
+    setWorkspaceData } = UseStateContext()
   useEffect(() => {
     // Connect to the Socket.IO server
-    const socket = io('http://216.219.86.171:3001/socket'); // Use 'http://' or 'https://' depending on your server configuration
+    const socket = io('https://tracking.uxlivinglab.online/socket'); // Use 'http://' or 'https://' depending on your server configuration
 
     // Event listener for successful connection
     socket.on('connect', () => {
@@ -26,8 +28,9 @@ const App = () => {
     });
 
     // Event listener for receiving messages from the server
-    socket.on('serverMessage', (message) => {
+    socket.on('message', (message) => {
       console.log('Received message from server:', message);
+      setWorkspaceData(message)
       // Update your component state or perform other actions with the received data
     });
 
@@ -46,7 +49,7 @@ const App = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [0]);
 
 
   return (
