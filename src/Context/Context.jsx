@@ -8,8 +8,9 @@ export const ContextProvider = ({ children }) => {
     const [showWorkSpace, setShowWorkSpace] = useState(false);
     const [deviceSpace, setDeviceSpace] = useState(false);
     const [userCoords, setUserCoords] = useState([]);
-    const [userLat, setUserLat ] = useState(0.0)
-    const [userLng, setUserLng] = useState(0.0)
+    const [count, setCount ] = useState(0)
+    const [userIdd, setUserIdd ] = useState("")
+    
 
     return (
         <ProjectContext.Provider value={{
@@ -21,10 +22,11 @@ export const ContextProvider = ({ children }) => {
              setDeviceSpace,
              userCoords, 
              setUserCoords,
-             userLat, 
-             setUserLat, 
-             userLng, 
-             setUserLng  }}>
+             count, 
+             setCount,
+             userIdd, 
+             setUserIdd
+               }}>
             {children}
         </ProjectContext.Provider>
     )

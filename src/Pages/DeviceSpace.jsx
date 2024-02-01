@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react'
 import SupperDummyData from '../data/seperDummyData'
+import EachUserCoords from '../data/EachUserCoords'
+import UserCoordinatesData from '../data/UserCoordinatesData'
 import { UseStateContext } from "../Context/Context.jsx";
 
 function DeviceSpace() {
@@ -7,24 +9,36 @@ function DeviceSpace() {
 const {  
   workspaceData, 
   setWorkspaceData, 
-  userLat, 
-  setUserLat, 
-  userLng, 
-  setUserLng } = UseStateContext()
+  count, 
+  setCount,
+  userIdd, 
+  setUserIdd } = UseStateContext()
 
-// let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
-// if(userId) {
-//   const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
-//   SupperDummyData.splice(index, 1)
-//   SupperDummyData.push(workspaceData)
-// }else{
-//   SupperDummyData.push(workspaceData)
-// }
+  function isEmptyObject(obj){
+    return JSON.stringify(obj) === '{}'
+  }
+
+let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
+if(userId) {
+  const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
+  SupperDummyData.splice(index, 1)
+  SupperDummyData.push(workspaceData)
+}else if(isEmptyObject(workspaceData) !== true){
+  SupperDummyData.push(workspaceData)
+}
 
 const handleUserClick = (index) =>{
-  SupperDummyData[index]
-  setUserLat(SupperDummyData[index].lat) 
-  setUserLng(SupperDummyData[index].lng)
+ let userId = SupperDummyData[index].user_id
+ //Clear the EachUserCoords array
+ EachUserCoords.splice(0, EachUserCoords.length);
+ console.log("TTTTTTTTTHHHHHHHHHHHHHHKKKKKKKK",SupperDummyData)
+UserCoordinatesData.map((value)=>{
+  if(value.user_id === userId) {
+    EachUserCoords.push(value)
+    console.log("TTTTTTTTTHHHHHHHHHHHHHHKKKKKKKK",EachUserCoords)
+  }
+ })
+setCount((count) => count + 1)
 }
 
   return (
@@ -38,7 +52,7 @@ const handleUserClick = (index) =>{
             <ul style={{textDecoration:"none", marginTop:20, lineHeight:"35px" }}>
                 {SupperDummyData.map((value, index)=>{
                     return <div key={index}>
-                              <li onClick={handleUserClick(index)} style={{cursor: 'pointer'}} key={index}>{value.user_id}</li>
+                              <li onClick={() =>handleUserClick(index)} style={{cursor: 'pointer'}} key={index}>{value.user_id}</li>
                         </div>
                 })}
                 {/* <li>Workspace 1</li>

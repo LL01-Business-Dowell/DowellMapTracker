@@ -6,6 +6,8 @@ import SideBar from "./SideBar";
 import Header from "./Pages/Header";
 import { UseStateContext } from "./Context/Context.jsx";
 import DeviceSpace from "./Pages/DeviceSpace.jsx";
+import UserCoordinatesData from './data/UserCoordinatesData'
+import EachUserCoords from './data/EachUserCoords'
 
 
 const App = () => {
@@ -16,7 +18,11 @@ const App = () => {
     deviceSpace,
     setDeviceSpace,
     workspaceData, 
-    setWorkspaceData } = UseStateContext()
+    setWorkspaceData,
+    count, 
+    setCount,
+     } = UseStateContext()
+
   useEffect(() => {
     // Connect to the Socket.IO server
     const socket = io('https://tracking.uxlivinglab.online/socket'); // Use 'http://' or 'https://' depending on your server configuration
@@ -31,6 +37,17 @@ const App = () => {
     socket.on('message', (message) => {
       console.log('Received message from server:', message);
       setWorkspaceData(message)
+
+      if(EachUserCoords.length === 0) {
+        UserCoordinatesData.push(message)
+      }else {
+        UserCoordinatesData.push(message)
+        console.log("This", UserCoordinatesData)
+        if(EachUserCoords.some(EachUserCoord => EachUserCoord.user_id === message.user_id)) {
+          EachUserCoords.push(message)
+          setCount((count) => count+1)
+        }
+      }
       // Update your component state or perform other actions with the received data
     });
 
@@ -53,11 +70,11 @@ const App = () => {
 
 
   return (
-    < div >
+    <div>
     <Header />
       {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
         <SideBar />
-      </div>}
+    </div>}
       {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
         <DeviceSpace />
       </div>}

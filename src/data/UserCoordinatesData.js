@@ -1,7 +1,7 @@
 
-const superDummmyCoords = [
+const UserCoordinatesData = [
     
 ]
   
   
-export default superDummmyCoords;
+export default UserCoordinatesData;
