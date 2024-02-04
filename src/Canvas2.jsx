@@ -5,6 +5,10 @@ import get_row_column from './GerPoints';
 // import Button from 'react-bootstrap/Button';
 // import axios from 'axios'
 import { io } from "socket.io-client";
+import GetStandWithData from './data/getStandWithData';
+import filterNonEmptyArrays from './data/fiterStandWithData';
+import extractStandData from './data/sortCells';
+import { useGlobalContext } from './Context/PreviewContext';
 
 
 const dummmyCoords = [
@@ -128,7 +132,15 @@ function AppendItems(arr, newStr) {
 }
 const sleep = ms =>
   new Promise(resolve => setTimeout(resolve, ms));
-const Canvas = () => {
+
+
+
+const Canvas2 = () => {
+
+  const {stands, setStands, currentStandSelection} = useGlobalContext();
+  const [standWithData, setStandWithData] = useState([]);
+  const [filteredSWData, setfilteredSWData] = useState();
+
   const canvasSize = 52; // in centimeters
   const boxSize = 1; // in centimeters
   const numBoxes = canvasSize / boxSize; // Number of boxes per side
@@ -171,25 +183,46 @@ const Canvas = () => {
   //   }
 
   // }
-   const triggerColor = async () => {
-    if (selectedRowColumn.length < 8) {
-      for (let i = 1; i < superDummmyCoords.length; i++) {
-        await sleep(10000)
-        const item = superDummmyCoords[i]
-        const row = item.lat
-        const col = item.lng
-        const coords = `row_${row}col_${col}`
-        setSelectedRowColumn([...selectedRowColumn, coords]);
-        for (let i = 0; i < selectedRowColumn.length; i++) {
-          // console.log(array[i]);
-          document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
+//    const triggerColor = async () => {
+//     if (selectedRowColumn.length < 8) {
+//       for (let i = 1; i < superDummmyCoords.length; i++) {
+//         await sleep(10000)
+//         const item = superDummmyCoords[i]
+//         const row = item.lat
+//         const col = item.lng
+//         const coords = `row_${row}col_${col}`
+//         setSelectedRowColumn([...selectedRowColumn, coords]);
+//         for (let i = 0; i < selectedRowColumn.length; i++) {
+//           // console.log(array[i]);
+//           document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
+//         }
+
+//         // console.log(selectedRowColumn)
+//       }
+
+//     }
+
+//   }
+
+  const triggerColorStands = async () => {
+        if (stands[currentStandSelection]) {
+            const data = stands[currentStandSelection]
+            for (let i = 1; i < superDummmyCoords.length; i++) {
+                await sleep(10000)
+                const item = superDummmyCoords[i]
+                const row = item.lat
+                const col = item.lng
+                const coords = `row_${row}col_${col}`
+                if (coords in data) {
+                    setSelectedRowColumn([...selectedRowColumn, coords]);
+                    for (let i = 0; i < selectedRowColumn.length; i++) {
+                    // console.log(array[i]);
+                    document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
+                    }
+                }
+            
         }
-
-        // console.log(selectedRowColumn)
-      }
-
     }
-
   }
   // const triggerColor = async () => {
   //   if (selectedRowColumn.length < 8) {
@@ -375,8 +408,29 @@ const Canvas = () => {
   useEffect(() => {
     // fetchSelections()
     // getCulpritIds()
-    triggerColor()
-  }, [selectedRowColumn]);
+    // triggerColor()
+    triggerColorStands()
+  }, [currentStandSelection]);
+
+
+  useEffect(()=>{
+    async function getData(){
+        let data1 = await GetStandWithData();
+        console.log(data1?.data.response)
+        setStandWithData(data1?.data.response)
+        console.log(standWithData)
+        return data1
+    }
+
+    const data =  getData();
+    console.log("standwith-data",standWithData)
+
+    const filtered_data = filterNonEmptyArrays(standWithData[0])
+    let final_data  = extractStandData(filtered_data)
+    setfilteredSWData(final_data);
+    setStands(final_data)
+    console.log("final-filtered-standwithdata",filteredSWData)
+  },[standWithData])
 
 
 
@@ -486,4 +540,4 @@ const Canvas = () => {
   );
 };
 
-export default Canvas;
+export default Canvas2;
