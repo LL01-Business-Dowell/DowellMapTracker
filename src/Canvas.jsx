@@ -96,7 +96,7 @@ if(userId) {
 
   console.log(coordinates, "TTTTTTTTTTTTTTTT")
 
-   const triggerColor = async () => {
+  const triggerColor = async () => {
     if (selectedRowColumn.length < 8) {
       for (let i = 0; i < EachUserCoords.length; i++) {
         console.log("hhhhhhhhhhhhhhhhhhhttttttttttttt",selectedRowColumn)
@@ -111,7 +111,7 @@ if(userId) {
           document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
         }
 
-        console.log("hhhhhhhhhhhhhhhhhhhttttttttttttt",selectedRowColumn)
+        console.log(selectedRowColumn)
       }
 
     }
@@ -379,7 +379,7 @@ if(userId) {
                 id={`row_${y}col_${x}`}
                 className={`box ${isSelected ? 'selected' : ''}`}
                 style={{
-                  border: '0.1px solid #ffff',
+                  // border: '0.1px solid #ffff',
                   boxSizing: 'border-box',
                   cursor: 'pointer',
                   backgroundColor: Array.from(selectedRowColumn).includes(`row_${y}col_${x}`) ? "green" : 'transparent'
