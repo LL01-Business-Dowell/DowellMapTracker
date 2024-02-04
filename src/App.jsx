@@ -1,14 +1,29 @@
 import Canvas from "./Canvas";
-import { useEffect } from "react";
+import { FiMenu } from "react-icons/fi";
+import React, { useEffect } from "react";
 import { io } from 'socket.io-client';
-import SideBar from "./SideBar";
-import Canvas2 from "./Canvas2";
-import StandWiseSideBar from "./StandWiseSideBar";
 import { BrowserRouter,createBrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./routes/root";
+import Header from "./Pages/Header";
+import { UseStateContext } from "./Context/Context.jsx";
+import DeviceSpace from "./Pages/DeviceSpace.jsx";
+import UserCoordinatesData from './data/UserCoordinatesData'
+import EachUserCoords from './data/EachUserCoords'
 
 
 const App = () => {
+
+  const { 
+    showWorkSpace, 
+    setShowWorkSpace, 
+    deviceSpace,
+    setDeviceSpace,
+    workspaceData, 
+    setWorkspaceData,
+    count, 
+    setCount,
+     } = UseStateContext()
+
   useEffect(() => {
     // Connect to the Socket.IO server
     const socket = io('https://tracking.uxlivinglab.online/socket'); // Use 'http://' or 'https://' depending on your server configuration
@@ -20,8 +35,20 @@ const App = () => {
     });
 
     // Event listener for receiving messages from the server
-    socket.on('serverMessage', (message) => {
+    socket.on('message', (message) => {
       console.log('Received message from server:', message);
+      setWorkspaceData(message)
+
+      if(EachUserCoords.length === 0) {
+        UserCoordinatesData.push(message)
+      }else {
+        UserCoordinatesData.push(message)
+        console.log("This", UserCoordinatesData)
+        if(EachUserCoords.some(EachUserCoord => EachUserCoord.user_id === message.user_id)) {
+          EachUserCoords.push(message)
+          setCount((count) => count+1)
+        }
+      }
       // Update your component state or perform other actions with the received data
     });
     socket.on('reactMessage', (message) => {
@@ -54,16 +81,29 @@ const App = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [0]);
 
 
   return (
-    <BrowserRouter>
-      <>
-      <AppRoutes/>
-      </>
-    </BrowserRouter>
-    )
+    // <BrowserRouter>
+    //   <>
+    //   <AppRoutes/>
+    //   </>
+    // </BrowserRouter>
+    // )
+    <div>
+    <Header />
+      {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
+        <SideBar />
+    </div>}
+      {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
+        <DeviceSpace />
+      </div>}
+      <div className="canvas">
+        <Canvas />
+      </div>
+    </div>
+  )
 }
 
 export default App

@@ -1,138 +1,29 @@
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import map from "./assets/Updated_Venue_Map_Aligned_50_x_50_cm.svg"
 import { ModalComponent } from './Modal'
 import get_row_column from './GerPoints';
+import { UseStateContext } from "./Context/Context.jsx";
+import SupperDummyData from './data/seperDummyData'
+import UserCoordinatesData from './data/UserCoordinatesData'
+import EachUserCoords from './data/EachUserCoords'
 // import Button from 'react-bootstrap/Button';
 // import axios from 'axios'
-import { io } from "socket.io-client";
 
-
-const dummmyCoords = [
-
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50760394166280000000,
-    "lng": 0.03095784466103210000,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50759802789350000000,
-    "lng": 0.03095784466103210000,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50759211412430000000,
-    "lng": 0.03095784466103210000,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50758620035500000000,
-    "lng": 0.03095784466103210000,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50758028658580000000,
-    "lng": 0.03096683801198020000,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50753889020100000000,
-    "lng": 0.03097583136292830000,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 51.50753297643180000000,
-    "lng": 0.03097583136292830000,
-    "link_id": "<String>"
-  }]
-const superDummmyCoords = [
-
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 45,
-    "lng": 10,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 43,
-    "lng": 12,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 42,
-    "lng": 20,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 41,
-    "lng": 6,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 39,
-    "lng": 13,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 34,
-    "lng": 6,
-    "link_id": "<String>"
-  },
-  {
-    "user_email": "ww.c@ch.com",
-    "company_id": "id_1",
-    "user_id": "user_id_1",
-    "lat": 45,
-    "lng": 10,
-    "link_id": "<String>"
-  }]
 function AppendItems(arr, newStr) {
   return arr.push(newStr)
 }
 const sleep = ms =>
   new Promise(resolve => setTimeout(resolve, ms));
 const Canvas = () => {
+  const {  
+    workspaceData, 
+    setWorkspaceData, 
+    count, 
+    setCount, } = UseStateContext()
   const canvasSize = 52; // in centimeters
   const boxSize = 1; // in centimeters
   const numBoxes = canvasSize / boxSize; // Number of boxes per side
-  const [selectedRowColumn, setSelectedRowColumn] = useState(["row_45col_13"]);
+  const [selectedRowColumn, setSelectedRowColumn] = useState([]);
   // const [cellsSelected, setSelectedCells] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   // const [startCell, setStartCell] = useState(null);
@@ -144,6 +35,7 @@ const Canvas = () => {
   const [showModal, setShowModal] = useState(false);
   const [coordinates, setCoordinates] = useState([]);
   const [selectionColors, setSelectionColors] = useState([]);
+  const [cnt, setCnt] = useState(0)
   // const triggerColor = () => {
   //   if (selectedRowColumn.length < 8) {
   //     superDummmyCoords.forEach((item) => {
@@ -171,13 +63,47 @@ const Canvas = () => {
   //   }
 
   // }
-   const triggerColor = async () => {
+
+  function isEmptyObject(obj){
+    return JSON.stringify(obj) === '{}'
+  }
+
+let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
+if(userId) {
+  const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
+  SupperDummyData.splice(index, 1)
+  SupperDummyData.push(workspaceData)
+}else if(isEmptyObject(workspaceData) !== true){
+  SupperDummyData.push(workspaceData)
+}
+
+
+//  console.log(SupperDummyData.includes(workspaceData.user_id))
+//   if(SupperDummyData.includes(workspaceData.user_id) === true) {
+//     const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
+//     SupperDummyData.splice(index, 1)
+//     SupperDummyData.push(workspaceData)
+//     console.log("nnnnnnnnnnjjhhh")
+//   }
+  // else if(SupperDummyData.includes(workspaceData.user_id) !== true && isEmptyObject(workspaceData) !== true) {
+  //   SupperDummyData.push(workspaceData) 
+  //   console.log("bbbbbbbbbbbbbbbjjhhh")
+  // }
+
+  useEffect(()=>{
+    setCoordinates(EachUserCoords)
+  }, [count])
+
+  console.log(coordinates, "TTTTTTTTTTTTTTTT")
+
+  const triggerColor = async () => {
     if (selectedRowColumn.length < 8) {
-      for (let i = 1; i < superDummmyCoords.length; i++) {
-        await sleep(10000)
-        const item = superDummmyCoords[i]
-        const row = item.lat
-        const col = item.lng
+      for (let i = 0; i < EachUserCoords.length; i++) {
+        console.log("hhhhhhhhhhhhhhhhhhhttttttttttttt",selectedRowColumn)
+        // await sleep(10000)
+        const item = EachUserCoords[i]
+        const row = Math.round(item.lat)
+        const col = Math.round(item.lng)
         const coords = `row_${row}col_${col}`
         setSelectedRowColumn([...selectedRowColumn, coords]);
         for (let i = 0; i < selectedRowColumn.length; i++) {
@@ -185,12 +111,13 @@ const Canvas = () => {
           document.querySelector('#' + selectedRowColumn[i]).style.background = 'green';
         }
 
-        // console.log(selectedRowColumn)
+        console.log(selectedRowColumn)
       }
 
     }
 
   }
+  
   // const triggerColor = async () => {
   //   if (selectedRowColumn.length < 8) {
   //     for (let i = 1; i < dummmyCoords.length; i++) {
@@ -376,7 +303,7 @@ const Canvas = () => {
     // fetchSelections()
     // getCulpritIds()
     triggerColor()
-  }, [selectedRowColumn]);
+  }, [count]);
 
 
 
@@ -406,7 +333,7 @@ const Canvas = () => {
           variant='success'
           onClick={fetchSelections} // Clears all selections// Adjust the position as needed
         > */}
-        Refresh
+        {/* Refresh */}
         {/* </Button> */}
       </div>
 
@@ -450,13 +377,12 @@ const Canvas = () => {
             const color = Array.from(selectedRowColumn).includes(tempID) ? "green" : 'transparent';
             // triggerColor()
             return (
-
               <div
                 key={cellIndex}
                 id={`row_${y}col_${x}`}
                 className={`box ${isSelected ? 'selected' : ''}`}
                 style={{
-                  border: '0.1px solid #ffff',
+                  // border: '0.1px solid #ffff',
                   boxSizing: 'border-box',
                   cursor: 'pointer',
                   backgroundColor: Array.from(selectedRowColumn).includes(`row_${y}col_${x}`) ? "green" : 'transparent'
@@ -486,4 +412,4 @@ const Canvas = () => {
   );
 };
 
-export default Canvas;
+export default React.memo(Canvas);
