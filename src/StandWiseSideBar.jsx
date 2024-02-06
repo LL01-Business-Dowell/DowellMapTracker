@@ -1,9 +1,8 @@
 // import styles from "./styles.module.css"
-// import { useStateContext } from "./context/Context";
-import { useGlobalContext } from "./Context/PreviewContext";
+import { UseStateContext } from "./Context/Context";
 
 function StandWiseSideBar(props) {
-    const { stands, currentStandSelection, setCurrentStandSelection } = useGlobalContext();
+    const { stands, currentStandSelection, setCurrentStandSelection } = UseStateContext();
 
     console.log("stands", stands)
     console.log("Current selection", currentStandSelection)

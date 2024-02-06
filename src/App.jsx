@@ -85,25 +85,12 @@ const App = () => {
 
 
   return (
-    // <BrowserRouter>
-    //   <>
-    //   <AppRoutes/>
-    //   </>
-    // </BrowserRouter>
-    // )
-    <div>
-    <Header />
-      {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
-        <SideBar />
-    </div>}
-      {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
-        <DeviceSpace />
-      </div>}
-      <div className="canvas">
-        <Canvas />
-      </div>
-    </div>
-  )
+    <BrowserRouter>
+      <>
+      <AppRoutes/>
+      </>
+    </BrowserRouter>
+    )
 }
 
 export default App
