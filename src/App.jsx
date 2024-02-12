@@ -8,6 +8,7 @@ import { UseStateContext } from "./Context/Context.jsx";
 import DeviceSpace from "./Pages/DeviceSpace.jsx";
 import UserCoordinatesData from './data/UserCoordinatesData'
 import EachUserCoords from './data/EachUserCoords'
+import axios from 'axios'
 
 
 const App = () => {
@@ -49,6 +50,29 @@ const App = () => {
         }
       }
       // Update your component state or perform other actions with the received data
+
+      //Store the response to MongoDb
+      const storeToMongoDb = () =>{
+        axios.post('https://datacube.uxlivinglab.online/db_api/crud/', {
+          "api_key": "0699dbbb-2786-4dfa-a1db-fc12f2210228",
+          "db_name": "dowell_tracking",
+          "coll_name": "user_info",
+          "operation": "insert",
+          "data": {
+            "id": message.company_id,
+            "user_id": message.user_id,
+            "name": message.name,
+            "email": message.email,
+            "org_name": message.company_name
+          }
+        }).then((response) => {
+          console.log("HHHHHHHHHHHHH",response)
+        }).catch(err =>{
+          console.log(err)
+        })
+      }
+
+      storeToMongoDb()
     });
 
     // Event listener for Socket.IO errors
