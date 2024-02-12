@@ -10,6 +10,9 @@ export const ContextProvider = ({ children }) => {
     const [userCoords, setUserCoords] = useState([]);
     const [count, setCount ] = useState(0)
     const [userIdd, setUserIdd ] = useState("")
+    const [stands, setStands] = useState([]);
+    const [currentStandSelection,setCurrentStandSelection] = useState([]);
+  
     
 
     return (
@@ -25,14 +28,25 @@ export const ContextProvider = ({ children }) => {
              count, 
              setCount,
              userIdd, 
-             setUserIdd
+             setUserIdd,
+             stands,
+             setStands,
+             currentStandSelection,
+             setCurrentStandSelection
                }}>
             {children}
         </ProjectContext.Provider>
     )
 }
 
-export const UseStateContext = () => useContext(ProjectContext);
+export const UseStateContext = () => {
+    return useContext(ProjectContext);
+};
+
+// export const useGlobalContext = () => {
+//     return useContext(PreviewContext);
+//   };
+  
 
 
 

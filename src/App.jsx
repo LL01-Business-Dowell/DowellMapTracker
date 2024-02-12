@@ -2,7 +2,8 @@ import Canvas from "./Canvas";
 import { FiMenu } from "react-icons/fi";
 import React, { useEffect } from "react";
 import { io } from 'socket.io-client';
-import SideBar from "./SideBar";
+import { BrowserRouter,createBrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./routes/root";
 import Header from "./Pages/Header";
 import { UseStateContext } from "./Context/Context.jsx";
 import DeviceSpace from "./Pages/DeviceSpace.jsx";
@@ -31,7 +32,7 @@ const App = () => {
     // Event listener for successful connection
     socket.on('connect', () => {
       console.log('Connected to Socket.IO server');
-      socket.emit('clientMessage', 'Hello Server!'); // Send a message to the server
+      // socket.emit("message","Good Morning from the react app")
     });
 
     // Event listener for receiving messages from the server
@@ -74,6 +75,20 @@ const App = () => {
 
       storeToMongoDb()
     });
+    socket.on('reactMessage', (message) => {
+      console.log('Received message from client:', message);
+      // Update your component state or perform other actions with the received data
+    });
+
+    socket.on("hello",(message)=>{
+      console.log(message)
+      socket.emit('reactMessage', 'Hello from the react app'); // Send a message to the server
+
+    })
+    socket.on("message",(message)=>{
+      console.log(message)
+      // socket.emit("message",message)
+    })
 
     // Event listener for Socket.IO errors
     socket.on('error', (error) => {
@@ -94,19 +109,12 @@ const App = () => {
 
 
   return (
-    <div>
-    <Header />
-      {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
-        <SideBar />
-    </div>}
-      {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
-        <DeviceSpace />
-      </div>}
-      <div className="canvas">
-        <Canvas />
-      </div>
-    </div>
-  )
+    <BrowserRouter>
+      <>
+      <AppRoutes/>
+      </>
+    </BrowserRouter>
+    )
 }
 
 export default App
