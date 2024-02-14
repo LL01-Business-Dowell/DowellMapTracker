@@ -35,14 +35,14 @@ const Canvas = () => {
     return JSON.stringify(obj) === '{}'
   }
 
-let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
-if(userId) {
-  const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
-  SupperDummyData.splice(index, 1)
-  SupperDummyData.push(workspaceData)
-}else if(isEmptyObject(workspaceData) !== true){
-  SupperDummyData.push(workspaceData)
-}
+// let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
+// if(userId) {
+//   const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
+//   SupperDummyData.splice(index, 1)
+//   SupperDummyData.push(workspaceData)
+// }else if(isEmptyObject(workspaceData) !== true){
+//   SupperDummyData.push(workspaceData)
+// }
 
 
 

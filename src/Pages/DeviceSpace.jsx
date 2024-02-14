@@ -18,26 +18,32 @@ const {
     return JSON.stringify(obj) === '{}'
   }
 
-let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
-if(userId) {
-  const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
-  SupperDummyData.splice(index, 1)
-  SupperDummyData.push(workspaceData)
-}else if(isEmptyObject(workspaceData) !== true){
-  SupperDummyData.push(workspaceData)
-}
+// let userId = SupperDummyData.find(data => data.user_id === workspaceData.user_id)
+// if(userId) {
+//   const index = SupperDummyData.findIndex(item => item.id === workspaceData.user_id);
+//   SupperDummyData.splice(index, 1)
+//   SupperDummyData.push(workspaceData)
+// }else if(isEmptyObject(workspaceData) !== true){
+//   SupperDummyData.push(workspaceData)
+// }
 
 const handleUserClick = (index) =>{
  let userId = SupperDummyData[index].user_id
  //Clear the EachUserCoords array
  EachUserCoords.splice(0, EachUserCoords.length);
  console.log("TTTTTTTTTHHHHHHHHHHHHHHKKKKKKKK",SupperDummyData)
-UserCoordinatesData.map((value)=>{
-  if(value.user_id === userId) {
-    EachUserCoords.push(value)
-    console.log("TTTTTTTTTHHHHHHHHHHHHHHKKKKKKKK",EachUserCoords)
-  }
- })
+ if(UserCoordinatesData.length !== 0) {
+  UserCoordinatesData.map((value)=>{
+    if(value.user_id === userId) {
+      EachUserCoords.push(value)
+      console.log("TTTTTTTTTHHHHHHHHHHHHHHKKKKKKKK",EachUserCoords)
+    }
+   })
+ }else {
+  EachUserCoords.push(SupperDummyData[index])
+  console.log("TTTTTTTTTHHHHHHHHHHHHHHKKKKKKKK",EachUserCoords)
+ }
+
 setCount((count) => count + 1)
 }
 
