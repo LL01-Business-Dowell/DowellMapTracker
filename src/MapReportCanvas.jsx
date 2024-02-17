@@ -17,34 +17,30 @@ useEffect(()=>{
     setCoordinates(EachUserCoords)
   }, [count])
 console.log(coordinates, "HHHHHHHHHHHHHHHHHHH")
-let map;
 
-async function initMap() {
-   // The location of Uluru
-   const position = { lat: -25.344, lng: 131.031 };
-   // Request needed libraries.
-   //@ts-ignore
-   const { Map } = await google.maps.importLibrary("maps");
-   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
- 
-   // The map, centered at Uluru
-   map = new Map(document.getElementById("map"), {
-     zoom: 4,
-     center: position,
-     mapId: "AIzaSyAsH8omDk8y0lSGLTW9YtZiiQ2MkmsF-uQ",
-   });
- 
-   // The marker, positioned at Uluru
-   const marker = new AdvancedMarkerElement({
-     map: map,
-     position: position,
-     title: "Uluru",
-   });
+const initMap = async() => {
+  // e.preventDefault()
+  var myLatlng = new google.maps.LatLng(coordinates.length !== 0 ? coordinates[0].lat : 0, coordinates.length !== 0 ? coordinates[0].lng : 0);
+  var mapOptions = {
+    zoom: 4,
+    center: myLatlng
+  }
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  
+  for(let i = 0; i<coordinates.length; i++) {
+    var marker = new google.maps.Marker({
+      position: {lat: coordinates[i].lat, lng: coordinates[i].lng},
+  });
+
+   // To add the marker to the map, call setMap();
+   marker.setMap(map);
+  }
+
 }
 
 useEffect(() =>{
   initMap();
-}, [])
+}, [count])
 
   return (
     <div id="map" style={{height: "100vh", width: "100vw"}}></div>

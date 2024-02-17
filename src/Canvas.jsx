@@ -119,15 +119,8 @@ const Canvas = () => {
   }, [count]);
 
 
-
-
-
-
-
   return (
-
     <>
-
       <div style={{
         margin: '3px',
         display: 'flex',
