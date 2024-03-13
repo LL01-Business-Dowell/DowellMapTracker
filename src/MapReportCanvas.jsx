@@ -16,7 +16,7 @@ function MapReportCanvas() {
 useEffect(()=>{
     setCoordinates(EachUserCoords)
   }, [count])
-console.log(coordinates, "HHHHHHHHHHHHHHHHHHH")
+console.log(EachUserCoords, "HHHHHHHHHHHHHHHHHHH")
 
 const initMap = async() => {
   // e.preventDefault()

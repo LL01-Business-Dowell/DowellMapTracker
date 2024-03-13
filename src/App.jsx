@@ -38,15 +38,15 @@ const App = () => {
     // Event listener for receiving messages from the server
     socket.on('message', (message) => {
       console.log('Received message from server:', message);
-      setWorkspaceData(message)
+      setWorkspaceData(JSON.parse(message))
        console.log(workspaceData, "BBBBBBBBBBBBBBBBBBBB")
       if(EachUserCoords.length === 0) {
-        UserCoordinatesData.push(message)
+        UserCoordinatesData.push(JSON.parse(message))
       }else {
-        UserCoordinatesData.push(message)
+        UserCoordinatesData.push(JSON.parse(message))
         console.log("This", UserCoordinatesData)
-        if(EachUserCoords.some(EachUserCoord => EachUserCoord.user_id === message.user_id)) {
-          EachUserCoords.push(message)
+        if(EachUserCoords.some(EachUserCoord => EachUserCoord.user_id === JSON.parse(message).user_id)) {
+          EachUserCoords.push(JSON.parse(message))
           setCount((count) => count+1)
         }
       }

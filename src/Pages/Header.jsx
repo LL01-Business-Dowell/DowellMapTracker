@@ -61,7 +61,7 @@ function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '52cm', fontSize: '20px', width:'230px', position:'fixed', left:'0', boxShadow: '0 3px 10px rgb(0 0 0 / 0.2)', zIndex: '9' }}>
       <img src={dowell} alt='Dowell logo' style={{width: '48px', height: '48px', borderRadius: '8px', margin: '20px', marginTop: '20px'}}/>
-      <div style={{marginLeft: '20px', color: '#005734', marginBottom: '20px'}}>
+      <div style={{marginLeft: '5px', color: '#005734', marginBottom: '20px'}}>
         <div onClick={handleTimeTrack} style={{display: 'flex', alignItems: 'center', borderRadius: '8px', fontSize: '16px', fontWeight: '400', fontStyle: 'inter', cursor:'pointer', marginBottom: '10px'}}>
           <img src={graphIcon} style={{width: '18.56px', height: '18.56px', marginRight: '10px'}} alt='icon' />
           <h1 style={{width: '100px', display: 'flex'}}>Time track</h1> 
@@ -73,7 +73,7 @@ function Header() {
       {showTimeTrack &&<div style={{marginBottom: '20px'}}>
         <div>
          {/* <p onClick={handleRealTime} style={{marginLeft: '30px', fontStyle: 'Inter', fontWeight: '400', fontSize: '16px', lineHeight: '24px', cursor: 'pointer'}}>Real time track</p> */}
-     <div style={{marginLeft: '20px', color: '#005734', marginBottom: '20px'}}>
+     <div style={{marginLeft: '5px', color: '#005734', marginBottom: '20px'}}>
       <div onClick={handleSpaces} style={{display: 'flex', alignItems: 'center', borderRadius: '8px', fontSize: '16px', fontWeight: '400', fontStyle: 'inter', cursor:'pointer', marginBottom: '10px'}}>
           {/* <img src={graphIcon} style={{width: '18.56px', height: '18.56px', marginRight: '10px'}} alt='icon' /> */}
           <MdAccessTimeFilled style={{width: '18.56px', height: '18.56px', marginRight: '10px'}}/>
@@ -85,13 +85,13 @@ function Header() {
           </div>
           { showSpaces &&<div>
             <div>
-             <Link to={"/DowellMapTracker/mapReport"}><h1 onMouseEnter={() => setMapReport(true)} onMouseLeave={() => setMapReport(false)} style={{ marginLeft: '30px', cursor: 'pointer', color: mapReport === true ? 'green' : '#005734', fontSize: '15px', fontWeight: '400', marginBottom: '4px' }} onClick={handleReport}>Map Report</h1></Link>
+             <Link to={"/DowellMapTracker/mapReport"}><h1 onMouseEnter={() => setMapReport(true)} onMouseLeave={() => setMapReport(false)} style={{ marginLeft: '15px', cursor: 'pointer', color: mapReport === true ? 'green' : '#005734', fontSize: '15px', fontWeight: '400', marginBottom: '4px' }} onClick={handleReport}>Map Report</h1></Link>
              {/* {showMaport &&<MapReportSideBar />} */}
              {showMaport &&<OtherUsers />}
              </div>
-             <Link to={"/DowellMapTracker/standwise"}><h1 onMouseEnter={() => setStandWiseColor(true)} onMouseLeave={() => setStandWiseColor(false)} style={{ marginLeft: '30px', cursor: 'pointer', color: standWiseColor === true ? 'green' : '#005734', fontSize: '15px', fontWeight: '400', marginBottom: '4px' }}>Standwise</h1></Link>
-             <h1 onClick={handleWorkSpace} onMouseEnter={() => setWorkspaceColor(true)} onMouseLeave={() => setWorkspaceColor(false)} style={{ marginLeft: '30px', cursor: 'pointer', color: workspaceColor === true ? 'green' : '#005734', fontSize: '16px', fontWeight: '400', marginBottom: '4px' }}>Heatmap</h1>
-             <Link to={"/DowellMapTracker"}><h1 onMouseEnter={() => setDeviceColor(true)} onMouseLeave={() => setDeviceColor(false)} style={{ marginLeft: '30px', cursor: 'pointer', color: deviceColor === true ? 'green' : '#005734', fontSize: '15px', fontWeight: '400', marginBottom: '4px' }}>Device Report</h1></Link>
+             <Link to={"/DowellMapTracker/standwise"}><h1 onMouseEnter={() => setStandWiseColor(true)} onMouseLeave={() => setStandWiseColor(false)} style={{ marginLeft: '15px', cursor: 'pointer', color: standWiseColor === true ? 'green' : '#005734', fontSize: '15px', fontWeight: '400', marginBottom: '4px' }}>Standwise</h1></Link>
+             <h1 onClick={handleWorkSpace} onMouseEnter={() => setWorkspaceColor(true)} onMouseLeave={() => setWorkspaceColor(false)} style={{ marginLeft: '15px', cursor: 'pointer', color: workspaceColor === true ? 'green' : '#005734', fontSize: '16px', fontWeight: '400', marginBottom: '4px' }}>Heatmap</h1>
+             <Link to={"/DowellMapTracker"}><h1 onMouseEnter={() => setDeviceColor(true)} onMouseLeave={() => setDeviceColor(false)} style={{ marginLeft: '15px', cursor: 'pointer', color: deviceColor === true ? 'green' : '#005734', fontSize: '15px', fontWeight: '400', marginBottom: '4px' }}>Device Report</h1></Link>
       </div>}
       </div>
          </div>
