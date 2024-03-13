@@ -25,14 +25,14 @@ export const AppRoutes = () =>  {
     
     return (
         <Routes>
-            <Route path="/DowellMapTracker" element={     <div>
+            <Route path="/DowellMapTracker" element={     <div style={{ display: "flex" }}>
                             <Header />
-                            {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
+                            {/* {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
                                 <SideBar />
-                            </div>}
-                            {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
+                            </div>} */}
+                            {/* {deviceSpace && <div className="devicespace" style={{ width: "70px" }}>
                                 <DeviceSpace />
-                            </div>}
+                            </div>} */}
                             <div className="canvas">
                                 <Canvas />
                             </div>
@@ -45,9 +45,9 @@ export const AppRoutes = () =>  {
 
             < div style={{ display: "flex" }} >
 
-                    <div className="Sidebar" style={{ width: "200px" }}>
+                    {/* <div className="Sidebar" style={{ width: "200px" }}>
                         <StandWiseSideBar/>
-                    </div>
+                    </div> */}
                     <div className="canvas" style={{ marginLeft: "200px" }}>
                         <Canvas2 />
                     </div>
@@ -60,9 +60,9 @@ export const AppRoutes = () =>  {
 
             < div style={{ display: "flex" }} >
 
-                    <div className="Sidebar" style={{ width: "200px" }}>
+                    {/* <div className="Sidebar" style={{ width: "200px" }}>
                         <MapReportSideBar/>
-                    </div>
+                    </div> */}
                     <Wrapper apiKey='AIzaSyAsH8omDk8y0lSGLTW9YtZiiQ2MkmsF-uQ'>
                         <MapReportCanvas />
                     </Wrapper>

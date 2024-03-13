@@ -27,6 +27,7 @@ const {
 //   SupperDummyData.push(workspaceData)
 // }
 
+
 const handleUserClick = (index) =>{
  let userId = SupperDummyData[index].user_id
  //Clear the EachUserCoords array

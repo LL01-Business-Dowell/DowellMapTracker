@@ -39,7 +39,7 @@ const App = () => {
     socket.on('message', (message) => {
       console.log('Received message from server:', message);
       setWorkspaceData(message)
-
+       console.log(workspaceData, "BBBBBBBBBBBBBBBBBBBB")
       if(EachUserCoords.length === 0) {
         UserCoordinatesData.push(message)
       }else {
@@ -73,7 +73,7 @@ const App = () => {
         })
       }
 
-      storeToMongoDb()
+      // storeToMongoDb()
     });
     socket.on('reactMessage', (message) => {
       console.log('Received message from client:', message);

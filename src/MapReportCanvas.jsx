@@ -20,7 +20,7 @@ console.log(coordinates, "HHHHHHHHHHHHHHHHHHH")
 
 const initMap = async() => {
   // e.preventDefault()
-  var myLatlng = new google.maps.LatLng(coordinates.length !== 0 ? coordinates[0].lat : 0, coordinates.length !== 0 ? coordinates[0].lng : 0);
+  var myLatlng = new google.maps.LatLng(coordinates.length !== 0 ? parseFloat(coordinates[0].lat) : 0, coordinates.length !== 0 ? parseFloat(coordinates[0].lon) : 0);
   var mapOptions = {
     zoom: 4,
     center: myLatlng
@@ -29,7 +29,7 @@ const initMap = async() => {
   
   for(let i = 0; i<coordinates.length; i++) {
     var marker = new google.maps.Marker({
-      position: {lat: coordinates[i].lat, lng: coordinates[i].lng},
+      position: {lat: parseFloat(coordinates[i].lat), lng: parseFloat(coordinates[i].lon)},
   });
 
    // To add the marker to the map, call setMap();
@@ -43,7 +43,7 @@ useEffect(() =>{
 }, [count])
 
   return (
-    <div id="map" style={{height: "100vh", width: "100vw"}}></div>
+    <div id="map" style={{height: "100vh", width: "100vw", marginLeft: '230px'}}></div>
   )
 }
 
