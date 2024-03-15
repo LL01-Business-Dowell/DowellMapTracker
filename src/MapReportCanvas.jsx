@@ -11,6 +11,7 @@ function MapReportCanvas() {
     setCount, } = UseStateContext()
 
     const [coordinates, setCoordinates] = useState([]);
+    let map
 
 
 useEffect(()=>{
@@ -25,21 +26,27 @@ const initMap = async() => {
     zoom: 4,
     center: myLatlng
   }
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  
+ map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  console.log(map, "TTTTTTTTTTTTTTTTTTTt")
+}
+
+const initMarker = () => {
   for(let i = 0; i<coordinates.length; i++) {
     var marker = new google.maps.Marker({
       position: {lat: parseFloat(coordinates[i].lat), lng: parseFloat(coordinates[i].lon)},
   });
-
    // To add the marker to the map, call setMap();
    marker.setMap(map);
   }
-
+console.log(map, "Booooooooooooooo")
 }
 
 useEffect(() =>{
   initMap();
+}, [])
+
+useEffect(() =>{
+  initMarker()
 }, [count])
 
   return (

@@ -43,7 +43,7 @@ function OtherUsers() {
         }
       }else {
         // OtherUser.push(workspaceData)
-        let userId = OtherUser.find(data => data.user_id === workspaceData.user_id)
+      let userId = OtherUser.find(data => data.user_id === workspaceData.user_id)
       if(userId) {
         const index = OtherUser.findIndex(item => item.id === workspaceData.user_id);
         OtherUser.splice(index, 1)
@@ -71,7 +71,8 @@ function OtherUsers() {
         setTeamData(index)
       }
 
-      const handleSingleUsers = (index) =>{
+      const handleSingleUsers = (e, index) =>{
+        e.preventDefault();
         let userId = OtherUser[index].user_id
         //Clear the EachUserCoords array
         EachUserCoords.splice(0, EachUserCoords.length);
@@ -114,9 +115,9 @@ function OtherUsers() {
       console.log("Workspace data ----------------", Teams)
   return (
     <div style={{marginLeft:"10px", fontSize: '15px'}}>
-      <div style={{display: 'flex', alignItems: 'center', borderRadius: '8px', fontSize: '16px', fontWeight: '400', fontStyle: 'inter'}}>
-        <img src={AudienceIcon} style={{width: '18.56px', height: '18.56px', marginLeft: '10px', marginRight: '10px'}} alt='icon' />
-        <h5>Teams</h5>
+      <div style={{display: 'flex', alignItems: 'center', borderRadius: '8px', fontSize: '16px', fontWeight: '400', fontStyle: 'Poppins'}}>
+        <img src={AudienceIcon} style={{width: '12.56px', height: '12.56px', marginLeft: '15px', marginRight: '0'}} alt='icon' />
+        <h5 style={{fontSize: '18.56px'}}>Teams</h5>
       </div>
             {/* <hr style={{width:"10vw"}} /> */}
             {/* {props.workspaces.forEach(element => {
@@ -164,14 +165,14 @@ function OtherUsers() {
                 <li>Workspace 2</li>
                 <li>Workspace 3</li> */}
             </ul>}
-            <div style={{display: 'flex', alignItems: 'center', borderRadius: '8px', fontSize: '16px', fontWeight: '400', fontStyle: 'inter'}}>
-            <FaRegUser style={{width: '18.56px', height: '18.56px', marginLeft: '10px', marginRight: '10px'}} />
-              <h5>Other users</h5>
+            <div style={{display: 'flex', alignItems: 'center', borderRadius: '8px', fontSize: '16px', fontWeight: '400', fontStyle: 'Poppins'}}>
+            <FaRegUser style={{width: '12.56px', height: '12.56px', marginLeft: '15px', marginRight: '0'}} />
+              <h5 style={{fontSize: '18.56px'}}>Public users</h5>
             </div>
             <ul style={{textDecoration:"none", lineHeight:"35px"}}>
                 {OtherUser.map((value, index)=>{
                     return <div key={index} >{
-                    <li onClick={() =>handleSingleUsers(index)} style={{cursor: 'pointer', fontSize: 'small'}} key={index}>{value.user_id}</li>
+                    <li onClick={(e) =>handleSingleUsers(e, index)} style={{cursor: 'pointer', fontSize: 'small'}} key={index}>{value.user_id}</li>
                      }
                  </div>
                 })}

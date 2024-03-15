@@ -9,6 +9,8 @@ import DeviceSpace from "../Pages/DeviceSpace";
 import MapReportCanvas from "../MapReportCanvas";
 import { Wrapper } from '@googlemaps/react-wrapper'
 import MapReportSideBar from "../MapReportSideBar";
+import { IoIosArrowDropleft } from "react-icons/io";
+import { IoIosArrowDropright } from "react-icons/io";
 
 
 export const AppRoutes = () =>  {
@@ -25,7 +27,7 @@ export const AppRoutes = () =>  {
     
     return (
         <Routes>
-            <Route path="/DowellMapTracker" element={     <div style={{ display: "flex" }}>
+            <Route path="/DowellMapTracker/Device" element={     <div style={{ display: "flex" }}>
                             <Header />
                             {/* {showWorkSpace && <div className="Sidebar" style={{ width: "70px" }}>
                                 <SideBar />
@@ -41,7 +43,9 @@ export const AppRoutes = () =>  {
 
             <Route path="/DowellMapTracker/standwise" element={
             <div>
+                {/* <IoIosArrowDropleft /> */}
                             <Header />
+                            {/* <IoIosArrowDropright /> */}
 
             < div style={{ display: "flex" }} >
 
@@ -54,7 +58,7 @@ export const AppRoutes = () =>  {
                     </div>
                     </div>}/>
 
-                    <Route path="/DowellMapTracker/MapReport" element={
+                    <Route path="/DowellMapTracker/" element={
             <div>
                             <Header />
 
