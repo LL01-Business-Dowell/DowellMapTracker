@@ -46,8 +46,8 @@ function MapReportSideBar() {
        setCount((count) => count + 1)
       }
   return (
-    <div style={{display:'flex', flexDirection:'column', textAlign:"center", marginLeft:"10px", position:'absolute', zIndex: '9', backgroundColor: 'lightgrey'}}>
-      <h5>Device space</h5>
+    <div style={{display:'flex', flexDirection:'column', textAlign:"center", marginLeft:"10px", fontSize: '15px'}}>
+      <h5>Teams</h5>
             <hr style={{width:"10vw"}} />
             {/* {props.workspaces.forEach(element => {
                 <li>element.company_id</li>

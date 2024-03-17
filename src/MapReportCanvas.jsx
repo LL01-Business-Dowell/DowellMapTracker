@@ -11,51 +11,51 @@ function MapReportCanvas() {
     setCount, } = UseStateContext()
 
     const [coordinates, setCoordinates] = useState([]);
+    const [map, setMap] = useState()
 
 
 useEffect(()=>{
     setCoordinates(EachUserCoords)
   }, [count])
-console.log(coordinates, "HHHHHHHHHHHHHHHHHHH")
-let map;
+console.log(EachUserCoords, "HHHHHHHHHHHHHHHHHHH")
 
-async function initMap() {
-   // The location of Uluru
-   const position = { lat: -25.344, lng: 131.031 };
-   const position2 = { lat: -25.364, lng: 131.031 };
-
-   // Request needed libraries.
-   //@ts-ignore
-   const { Map } = await google.maps.importLibrary("maps");
-   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
- 
-   // The map, centered at Uluru
-   map = new Map(document.getElementById("map"), {
-     zoom: 4,
-     center: position,
-     mapId: "AIzaSyAsH8omDk8y0lSGLTW9YtZiiQ2MkmsF-uQ",
-   });
- 
-   // The marker, positioned at Uluru
-   const marker = new AdvancedMarkerElement({
-     map: map,
-     position: position,
-     title: "Uluru",
-   });
-   const marker2 = new AdvancedMarkerElement({
-    map: map,
-    position: position2,
-    title: "Uluru",
-  });
-
+const initMap = async() => {
+  // e.preventDefault()
+  var myLatlng = new google.maps.LatLng(coordinates.length !== 0 ? parseFloat(coordinates[0].lat) : -25.344, coordinates.length !== 0 ? parseFloat(coordinates[0].lon) : 131.031);
+  var mapOptions = {
+    zoom: 18,
+    center: myLatlng
   }
+ setMap(new google.maps.Map(document.getElementById("map"), mapOptions));
+  console.log(map, "TTTTTTTTTTTTTTTTTTTt")
+}
 
 useEffect(() =>{
   initMap();
 }, [])
 
+useEffect(() =>{
+  const initMarker = () => {
+    for(let i = 0; i<coordinates.length; i++) {
+      var marker = new google.maps.Marker({
+        position: {lat: parseFloat(coordinates[i].lat), lng: parseFloat(coordinates[i].lon)},
+        title: coordinates[i].timestamp
+    });
+     // To add the marker to the map, call setMap();
+     marker.setMap(map);
+     map.setCenter(marker.getPosition());
+     if(i === 200) {
+      break
+     }
+    }
+  console.log(map, "Booooooooooooooo")
+  }
+
+  initMarker()
+}, [count])
+
   return (
-    <div id="map" style={{height: "100vh", width: "100vw"}}></div>
+    <div id="map" style={{height: "100vh", width: "100vw", marginLeft: '230px'}}></div>
   )
 }
 

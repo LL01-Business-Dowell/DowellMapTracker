@@ -109,6 +109,7 @@ const Canvas = () => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: '235px'
   }), [canvasSize]);
 
 
@@ -119,25 +120,19 @@ const Canvas = () => {
   }, [count]);
 
 
-
-
-
-
-
   return (
-
     <>
-
-      <div style={{
+      {/* <div style={{
         margin: '3px',
         display: 'flex',
         flexDirection: 'row',
         gap: 10, zIndex: 10,
         position: 'fixed',
+        backgroundColor: 'purple'
       }}>
-
+       <h1>Hello</h1>
       
-      </div>
+      </div> */}
 
       <div style={canvasStyle}>
         <div style={{
