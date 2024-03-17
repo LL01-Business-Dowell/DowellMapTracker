@@ -22,6 +22,8 @@ let map;
 async function initMap() {
    // The location of Uluru
    const position = { lat: -25.344, lng: 131.031 };
+   const position2 = { lat: -25.364, lng: 131.031 };
+
    // Request needed libraries.
    //@ts-ignore
    const { Map } = await google.maps.importLibrary("maps");
@@ -40,7 +42,13 @@ async function initMap() {
      position: position,
      title: "Uluru",
    });
-}
+   const marker2 = new AdvancedMarkerElement({
+    map: map,
+    position: position2,
+    title: "Uluru",
+  });
+
+  }
 
 useEffect(() =>{
   initMap();
