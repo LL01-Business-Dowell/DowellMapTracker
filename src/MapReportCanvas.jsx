@@ -21,9 +21,9 @@ console.log(EachUserCoords, "HHHHHHHHHHHHHHHHHHH")
 
 const initMap = async() => {
   // e.preventDefault()
-  var myLatlng = new google.maps.LatLng(coordinates.length !== 0 ? parseFloat(coordinates[0].lat) : -25.344, coordinates.length !== 0 ? parseFloat(coordinates[0].lon) : 131.031);
+  var myLatlng = new google.maps.LatLng(coordinates.length !== 0 ? parseFloat(coordinates[0].lat) : 0.0, coordinates.length !== 0 ? parseFloat(coordinates[0].lon) :0.0);
   var mapOptions = {
-    zoom: 18,
+    zoom: 17,
     center: myLatlng
   }
  setMap(new google.maps.Map(document.getElementById("map"), mapOptions));
