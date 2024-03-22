@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { UseStateContext } from "./Context/Context.jsx";
 import EachUserCoords from './data/EachUserCoords'
+import { useSearchParams } from 'react-router-dom';
 
 function MapReportCanvas() {
 
@@ -12,6 +13,42 @@ function MapReportCanvas() {
 
     const [coordinates, setCoordinates] = useState([]);
     const [map, setMap] = useState()
+    const [searchParams] = useSearchParams();
+
+    const getUserInfo = async () => {
+      // setLoadingFetchUserInfo(true);
+      const session_id = searchParams.get("session_id");
+      axios
+        .post("https://100014.pythonanywhere.com/api/userinfo/", {
+          session_id: session_id
+        })
+  
+        .then((response) => {
+          console.log(response?.data);
+          setUserInfo(response?.data?.userinfo);
+          console.log(userInfo);
+          sessionStorage.setItem('userInfo', JSON.stringify(response.data));
+          // setLoadingFetchUserInfo(false);
+        })
+        .catch((error) => {
+          // setLoadingFetchUserInfo(false);
+          console.error("Error:", error);
+        });
+    };
+
+    useEffect(() => {
+      const session_id = searchParams.get("session_id");
+      console.log("HHHHHHHHHHHHHHHHHHH",window.location.href)
+      if (!session_id) {
+        window.location.href =
+          "https://100014.pythonanywhere.com/?redirect_url=" +
+          `${window.location.href}`;
+        return;
+      }
+      getUserInfo();
+      sessionStorage.setItem('session_id', session_id);
+      // setLoggedIn(true);
+    }, []);
 
 
 useEffect(()=>{
